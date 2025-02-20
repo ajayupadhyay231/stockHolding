@@ -166,7 +166,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   rowText:{
-    fontSize:18
+    fontSize:18,
+    color:"black"
   },
   rowValue:{
     fontSize:18,

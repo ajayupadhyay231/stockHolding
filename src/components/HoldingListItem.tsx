@@ -2,11 +2,20 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
-const HoldingListItem = ({ holdingListItem }) => {
+interface StockHolding {
+    avgPrice: number;
+    close: number;
+    ltp: number;
+    quantity: number;
+    symbol: string;
+}
+
+
+const HoldingListItem = ({ holdingListItem} :{holdingListItem : StockHolding } ) => {
     const { symbol, quantity, ltp, avgPrice, close } = holdingListItem;
 
-   const totalValue = (quantity * ltp).toFixed(2); 
-   const individualProfitLoss = ((ltp - avgPrice) * quantity).toFixed(2); 
+   const totalValue: number = parseFloat((quantity * ltp).toFixed(2)); 
+   const individualProfitLoss: number = parseFloat(((ltp - avgPrice) * quantity).toFixed(2)); 
 
    const isProfit = individualProfitLoss >= 0;
 

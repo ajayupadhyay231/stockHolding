@@ -3,7 +3,7 @@ import React from 'react';
 import StockHoldingScreen from './src/screens/StockHoldingScreen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-const App = () => {
+const App : React.FC = () => {   // React.FC to define functional Component type...
   return (
     <SafeAreaView style={styles.appContainer}>
       <GestureHandlerRootView style={{ flex: 1 }}>  

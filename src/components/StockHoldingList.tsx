@@ -2,11 +2,28 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import HoldingListItem from './HoldingListItem';
 
-const StockHoldingList = ({ userHoldingList }) => {
-    
-    const renderHoldingListItem = ({ item }) => {
-        return(
-            <HoldingListItem holdingListItem = {item}></HoldingListItem>
+interface StockHolding {
+    avgPrice: number;
+    close: number;
+    ltp: number;
+    quantity: number;
+    symbol: string;
+}
+
+// interface StockHoldingListProps {
+//     userHoldingList: StockHolding[];
+// }
+
+// interface HoldingListItemProps {
+//     item: StockHolding;
+// }
+
+
+const StockHoldingList = ({ userHoldingList }: {userHoldingList :  StockHolding[]}) => {
+
+    const renderHoldingListItem = ({ item }: { item: StockHolding }) => {
+        return (
+            <HoldingListItem holdingListItem={item}></HoldingListItem>
         )
     };
 
@@ -20,7 +37,7 @@ const StockHoldingList = ({ userHoldingList }) => {
                     <Text style={styles.headerText}>My Holdings</Text>
                 </View>
             }
-            stickyHeaderIndices={[0]}  
+            stickyHeaderIndices={[0]}
             ItemSeparatorComponent={() => <View style={styles.separator} />}
             style={styles.listContainer}
         >

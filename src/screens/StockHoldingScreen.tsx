@@ -5,16 +5,27 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import { GestureDetector, Gesture,  } from 'react-native-gesture-handler'; 
 
 
+interface StockHolding {
+  avgPrice: number;
+  close: number;
+  ltp: number;
+  quantity: number;
+  symbol: string;
+}
+
+
 const StockHoldingScreen = () => {
 
-  const [userHoldingList, setUserHoldingList] = useState([])
-  const [isLoading, setIsLoading] = useState(false); 
-  const bottomSheetRef = useRef(null); 
 
-  const [currentValueTotal, setCurrentValueTotal] = useState(0);
-  const [totalInvestment, setTotalInvestment] = useState(0);
-  const [totalPnL, setTotalPnL] = useState(0);
-  const [todaysPnL, setTodaysPnL] = useState(0);
+  const [userHoldingList, setUserHoldingList] = useState<StockHolding[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false); 
+  const bottomSheetRef = useRef<any>(null);
+
+  const [currentValueTotal, setCurrentValueTotal] = useState<number>(0);
+  const [totalInvestment, setTotalInvestment] = useState<number>(0);
+  const [totalPnL, setTotalPnL] = useState<number>(0);
+  const [todaysPnL, setTodaysPnL] = useState<number>(0);
+  
 
   useEffect(() => {
     calculateValues();
@@ -35,12 +46,13 @@ const StockHoldingScreen = () => {
       totalTodayPnL += todayIndividualPnL;
     });
   
-    setCurrentValueTotal(totalCurrentValue.toFixed(2));
-    setTotalInvestment(totalInvestedValue.toFixed(2));
-    setTodaysPnL(totalTodayPnL.toFixed(2));
-
-    let totalPnL = (totalCurrentValue - totalInvestedValue).toFixed(2)
+    setCurrentValueTotal(parseFloat(totalCurrentValue.toFixed(2)));
+    setTotalInvestment(parseFloat(totalInvestedValue.toFixed(2)));
+    setTodaysPnL(parseFloat(totalTodayPnL.toFixed(2)));
+    
+    let totalPnL = parseFloat((totalCurrentValue - totalInvestedValue).toFixed(2));
     setTotalPnL(totalPnL);
+    
   };
 
   const swipeGestureHandler = Gesture.Pan()
@@ -55,7 +67,7 @@ const StockHoldingScreen = () => {
     fetchUserHoldingList()
   }, [])
 
-  const fetchUserHoldingList = async () => {
+  const fetchUserHoldingList = async ():Promise<void> => {
     try {
       setIsLoading(true)
       const response = await fetch("https://json-jvjm.onrender.com/test");
@@ -79,13 +91,13 @@ const StockHoldingScreen = () => {
 
   const handleSheetOpen = () => {
     if (bottomSheetRef.current) {
-      bottomSheetRef.current.open(); 
+      bottomSheetRef.current?.open(); 
     }
   };
 
   const handleSheetClose = () =>{
     if (bottomSheetRef.current) {
-      bottomSheetRef.current.close();
+      bottomSheetRef.current?.close();
     }
   }
 
